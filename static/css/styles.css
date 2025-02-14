@@ -127,11 +127,49 @@ body {
     color: #007bff;
 }
 
+/* JSON Key Styling */
+.json-key {
+    color: #4CAF50; /* Green color for keys */
+    font-weight: bold;
+}
+
+/* Other JSON syntax highlighting */
 #response-body {
     background-color: #282c34;
     color: #abb2bf;
     padding: 15px;
     border-radius: 4px;
-    max-height: 300px;
+    max-height: 500px;
     overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.5;
+    tab-size: 4;
+}
+
+#response-body .string { color: #98c379; } /* Green for strings */
+#response-body .number { color: #8666d1; } /* Orange for numbers */
+#response-body .boolean { color: #56b6c2; } /* Blue for booleans */
+#response-body .null { color: #c678dd; } /* Purple for null */
+
+
+/* Button to open response in new window */
+.open-window-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.open-window-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.open-window-button i {
+    margin-right: 5px;
 }
