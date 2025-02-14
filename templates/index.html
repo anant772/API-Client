@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Client - Postman Clone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>API Client</h1>
+            <p>A simple Postman clone built with Flask</p>
+        </header>
+
+        <!-- Request Section -->
+        <div class="request-section">
+            <div class="request-controls">
+                <select class="method-select" id="method">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+                <input type="text" class="url-input" id="url" placeholder="Enter request URL (e.g., https://api.example.com/data)">
+                <button id="send-btn" class="send-button">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
+
+            <!-- Headers Section -->
+            <div class="headers-section">
+                <h3><i class="fas fa-heading"></i> Headers</h3>
+                <div id="headers">
+                    <div class="header-row">
+                        <input type="text" class="header-input" placeholder="Key">
+                        <input type="text" class="header-input" placeholder="Value">
+                        <button class="add-header-btn"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request Body Section -->
+            <div class="body-section">
+                <h3><i class="fas fa-code"></i> Request Body</h3>
+                <textarea id="body" class="code-area" placeholder="Enter JSON request body"></textarea>
+            </div>
+        </div>
+
+        <!-- Response Section -->
+        <div class="response-section">
+            <h3><i class="fas fa-reply"></i> Response</h3>
+            <div id="response-status" class="response-status"></div>
+            <pre id="response-body" class="code-area"></pre>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
