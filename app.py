@@ -36,4 +36,4 @@ def send_request():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.0.11', port=5000)
