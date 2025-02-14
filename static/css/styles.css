@@ -312,6 +312,7 @@ body.light-mode .null { color: #6a1b9a; }
     padding: 15px;
     background-color: #2d2d2d;
     border-radius: 5px;
+    color: #d3d3d3;
 }
 
 .history-section.light-mode {
@@ -362,4 +363,30 @@ body.light-mode .null { color: #6a1b9a; }
     border-radius: 4px;
     cursor: pointer;
     margin-bottom: 10px;
+}
+
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    background-color: rgba(30, 30, 30, 0.9);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+body.light-mode .app-footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Add to .app-container */
+.app-container {
+    position: relative;
+    padding-bottom: 40px; /* Add space for footer */
 }

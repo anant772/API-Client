@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.add-header-btn').addEventListener('click', addHeader);
     document.getElementById('send-btn').addEventListener('click', sendRequest);
     document.getElementById('clear-history').addEventListener('click', clearHistory);
-    loadHistory();
+    displayHistory();
 
     // Add event listener for the theme toggle button
     const themeToggle = document.getElementById('theme-toggle');
@@ -66,8 +66,6 @@ function openResponseInNewWindow() {
     `);
     newWindow.document.close();
 }
-
-// ... rest of the existing code ...
 
 function addHeader() {
     const headersDiv = document.getElementById('headers');
@@ -185,6 +183,7 @@ function displayHistory() {
             </div>
             <div class="history-details">
                 <button onclick="copyResponseToBody(${index})"><i class="fas fa-copy"></i> Use Response</button>
+                <button onclick="loadRequestFromHistory(${index})"><i class="fas fa-sync"></i> Load Request</button>
                 <pre>${JSON.stringify(entry.response, null, 2)}</pre>
             </div>
         `;
@@ -213,27 +212,46 @@ function clearHistory() {
     displayHistory();
 }
 
-function loadHistory() {
-    const history = JSON.parse(localStorage.getItem('requestHistory') || '[]');
-    const list = document.getElementById('history-list');
-    list.innerHTML = '';
 
-    history.forEach((entry, index) => {
-        const entryEl = document.createElement('div');
-        entryEl.className = 'history-entry';
-        entryEl.innerHTML = `
-            <div>
-                <span class="history-method">${entry.method}</span>
-                <span class="history-url">${entry.url}</span>
-                <span class="history-status">${entry.response?.status_code || 'Error'}</span>
-            </div>
-            <div class="history-details">
-                <button onclick="copyResponseToBody(${index})"><i class="fas fa-copy"></i> Use Response</button>
-                <pre>${JSON.stringify(entry.response, null, 2)}</pre>
-            </div>
-        `;
-        entryEl.querySelector('.history-details').style.display = 'none';
-        entryEl.addEventListener('click', () => toggleHistoryDetails(entryEl));
-        list.appendChild(entryEl);
-    });
-}
+function loadRequestFromHistory(index) { 
+
+    const history = JSON.parse(localStorage.getItem('requestHistory') || '[]');
+    const entry = history[index]; if (!entry) return;
+
+    // Set URL and method
+    document.getElementById('url').value = entry.url;
+    document.getElementById('method').value = entry.method;
+    
+    // Set request body (if available)
+    if (entry.requestBody) {
+        try {
+            // If stored as an object, pretty-print it
+            document.getElementById('body').value = JSON.stringify(entry.requestBody, null, 4);
+        } catch (e) {
+            document.getElementById('body').value = entry.requestBody;
+        }
+    } else {
+        document.getElementById('body').value = '';
+    }
+    
+    // Clear existing headers
+    const headersDiv = document.getElementById('headers');
+    headersDiv.innerHTML = '';
+    
+    // Populate headers from history (if any)
+    if (entry.headers && entry.headers.length > 0) {
+        entry.headers.forEach(hdr => {
+            const newHeader = document.createElement('div');
+            newHeader.className = 'header-row';
+            newHeader.innerHTML = `
+                <input type="text" class="header-input" placeholder="Key" value="${hdr.key}">
+                <input type="text" class="header-input" placeholder="Value" value="${hdr.value}">
+                <button onclick="this.parentElement.remove()"><i class="fas fa-minus"></i></button>
+            `;
+            headersDiv.appendChild(newHeader);
+        });
+    } else {
+        // If no headers were saved, add one empty header row.
+        addHeader();
+    }
+    }
