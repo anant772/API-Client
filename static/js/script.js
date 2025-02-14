@@ -1,11 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Add Header functionality
     document.querySelector('.add-header-btn').addEventListener('click', addHeader);
     document.getElementById('send-btn').addEventListener('click', sendRequest);
 
+    // Add event listener for the theme toggle button
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
     // Add event listener for the new button
     document.getElementById('open-in-new-window').addEventListener('click', openResponseInNewWindow);
 });
+
+// Function to toggle between dark and light modes
+function toggleTheme() {
+    const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
+// Function to set the theme
+function setTheme(theme) {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (theme === 'light') {
+        document.body.classList.add('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.body.classList.remove('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        localStorage.setItem('theme', 'dark');
+    }
+}
 
 // Function to open response in a new window
 function openResponseInNewWindow() {

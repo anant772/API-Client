@@ -5,6 +5,7 @@ body {
     padding: 0;
     background-color: #f5f5f5;
     color: #333;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .app-container {
@@ -145,6 +146,7 @@ body {
     word-break: break-word;
     line-height: 1.5;
     tab-size: 4;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 #response-body .string { color: #98c379; } /* Green for strings */
@@ -173,3 +175,133 @@ body {
 .open-window-button i {
     margin-right: 5px;
 }
+
+/* Light Mode Styles */
+body.light-mode {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+body.light-mode #response-body {
+    background-color: #f5f5f5;
+    color: #333333;
+}
+
+body.light-mode .json-key {
+    color: #2e7d32; /* Darker green for light mode */
+}
+
+body.light-mode .string { color: #388e3c; } /* Darker green for strings */
+body.light-mode .number { color: #d84315; } /* Darker orange for numbers */
+body.light-mode .boolean { color: #0277bd; } /* Darker blue for booleans */
+body.light-mode .null { color: #6a1b9a; } /* Darker purple for null */
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+    background-color: #0056b3;
+}
+
+.theme-toggle i {
+    margin-right: 5px;
+}
+
+/* static/css/styles.css */
+
+/* Dark Mode (Default) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;  /* Dark background */
+    color: #e0e0e0;  /* Light text */
+}
+
+.section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #3a3a3a;  /* Darker border */
+    border-radius: 5px;
+    background-color: #2d2d2d;  /* Dark section background */
+}
+
+/* Light Mode */
+body.light-mode {
+    background-color: #e0e0e0ab;
+    color: #333333;
+}
+
+body.light-mode .section {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+/* Response body in dark mode */
+#response-body {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+}
+
+/* Response body in light mode */
+body.light-mode #response-body {
+    background-color: #f8f9fabd;
+    color: #333333;
+}
+
+/* Input fields in dark mode */
+.url-input,
+.method-select,
+.header-input,
+.code-area {
+    background-color: #333333;
+    color: #ffffffc0;
+    border: 1px solid #4d4d4d;
+}
+
+/* Input fields in light mode */
+body.light-mode .url-input,
+body.light-mode .method-select,
+body.light-mode .header-input,
+body.light-mode .code-area {
+    background-color: #ffffffa2;
+    color: #333333;
+    border: 1px solid #ced4da;
+}
+
+/* Buttons in dark mode */
+button {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Buttons in light mode */
+body.light-mode button {
+    background-color: #0056b3;
+}
+
+/* JSON syntax colors for dark mode */
+.json-key { color: #4CAF50; }
+.string { color: #98c379; }
+.number { color: #d19a66; }
+.boolean { color: #56b6c2; }
+.null { color: #c678dd; }
+
+/* JSON syntax colors for light mode */
+body.light-mode .json-key { color: #2e7d32; }
+body.light-mode .string { color: #388e3c; }
+body.light-mode .number { color: #d84315; }
+body.light-mode .boolean { color: #0277bd; }
+body.light-mode .null { color: #6a1b9a; }
