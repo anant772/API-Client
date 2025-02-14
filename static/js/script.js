@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.add-header-btn').addEventListener('click', addHeader);
     document.getElementById('send-btn').addEventListener('click', sendRequest);
+    document.getElementById('clear-history').addEventListener('click', clearHistory);
+    loadHistory();
 
     // Add event listener for the theme toggle button
     const themeToggle = document.getElementById('theme-toggle');
@@ -52,7 +54,7 @@ function openResponseInNewWindow() {
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/json.min.js"></script>
                 <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; }
+                    body { font-family: Arial, sans-serif; padding: 10px; }
                     pre { white-space: pre-wrap; word-break: break-word; }
                 </style>
             </head>
@@ -116,6 +118,7 @@ async function sendRequest() {
             const formattedJson = JSON.stringify(jsonBody, null, 4);
             const coloredJson = formatJsonKeys(formattedJson);
             document.getElementById('response-body').innerHTML = coloredJson;
+            saveToHistory({ method, url, headers, body }, data);
         } catch {
             document.getElementById('response-body').textContent = data.body || data.error;
         }
@@ -144,4 +147,93 @@ function formatJsonKeys(jsonString) {
     jsonString = jsonString.replace(/: null/g, ':<span class="null">null</span>');
     
     return jsonString;
+}
+
+
+// Save request to history
+function saveToHistory(requestData, responseData) {
+    const entry = {
+        timestamp: new Date().toISOString(),
+        method: requestData.method,
+        url: requestData.url,
+        headers: requestData.headers,
+        requestBody: requestData.body,
+        response: responseData
+    };
+
+    const history = JSON.parse(localStorage.getItem('requestHistory') || '[]');
+    history.unshift(entry); // Add to beginning
+    if (history.length > 50) history.pop(); // Keep last 50 entries
+    localStorage.setItem('requestHistory', JSON.stringify(history));
+    displayHistory();
+}
+
+// Display history
+function displayHistory() {
+    const history = JSON.parse(localStorage.getItem('requestHistory') || '[]');
+    const list = document.getElementById('history-list');
+    list.innerHTML = '';
+
+    history.forEach((entry, index) => {
+        const entryEl = document.createElement('div');
+        entryEl.className = 'history-entry';
+        entryEl.innerHTML = `
+            <div>
+                <span class="history-method">${entry.method}</span>
+                <span class="history-url">${entry.url}</span>
+                <span class="history-status">${entry.response?.status_code || 'Error'}</span>
+            </div>
+            <div class="history-details">
+                <button onclick="copyResponseToBody(${index})"><i class="fas fa-copy"></i> Use Response</button>
+                <pre>${JSON.stringify(entry.response, null, 2)}</pre>
+            </div>
+        `;
+        entryEl.querySelector('.history-details').style.display = 'none';
+        entryEl.addEventListener('click', () => toggleHistoryDetails(entryEl));
+        list.appendChild(entryEl);
+    });
+}
+
+// Toggle details visibility
+function toggleHistoryDetails(entryEl) {
+    const details = entryEl.querySelector('.history-details');
+    details.style.display = details.style.display === 'none' ? 'block' : 'none';
+}
+
+// Copy response to request body
+function copyResponseToBody(index) {
+    const history = JSON.parse(localStorage.getItem('requestHistory'));
+    const responseBody = history[index].response.body;
+    document.getElementById('body').value = responseBody;
+}
+
+// Clear history
+function clearHistory() {
+    localStorage.removeItem('requestHistory');
+    displayHistory();
+}
+
+function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('requestHistory') || '[]');
+    const list = document.getElementById('history-list');
+    list.innerHTML = '';
+
+    history.forEach((entry, index) => {
+        const entryEl = document.createElement('div');
+        entryEl.className = 'history-entry';
+        entryEl.innerHTML = `
+            <div>
+                <span class="history-method">${entry.method}</span>
+                <span class="history-url">${entry.url}</span>
+                <span class="history-status">${entry.response?.status_code || 'Error'}</span>
+            </div>
+            <div class="history-details">
+                <button onclick="copyResponseToBody(${index})"><i class="fas fa-copy"></i> Use Response</button>
+                <pre>${JSON.stringify(entry.response, null, 2)}</pre>
+            </div>
+        `;
+        entryEl.querySelector('.history-details').style.display = 'none';
+        entryEl.addEventListener('click', () => toggleHistoryDetails(entryEl));
+        list.appendChild(entryEl);
+    });
 }

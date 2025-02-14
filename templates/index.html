@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Client - Postman Clone</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <!-- Add in head section -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/json.min.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Header -->
@@ -31,7 +34,8 @@
                     <option value="PUT">PUT</option>
                     <option value="DELETE">DELETE</option>
                 </select>
-                <input type="text" class="url-input" id="url" placeholder="Enter request URL (e.g., https://api.example.com/data)">
+                <input type="text" class="url-input" id="url"
+                    placeholder="Enter request URL (e.g., https://api.example.com/data)" />
                 <button id="send-btn" class="send-button">
                     <i class="fas fa-paper-plane"></i> Send
                 </button>
@@ -42,9 +46,11 @@
                 <h3><i class="fas fa-heading"></i> Headers</h3>
                 <div id="headers">
                     <div class="header-row">
-                        <input type="text" class="header-input" placeholder="Key">
-                        <input type="text" class="header-input" placeholder="Value">
-                        <button class="add-header-btn"><i class="fas fa-plus"></i></button>
+                        <input type="text" class="header-input" placeholder="Key" />
+                        <input type="text" class="header-input" placeholder="Value" />
+                        <button class="add-header-btn">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -68,6 +74,15 @@
         </div>
     </div>
 
+    <div class="history-section">
+        <h3><i class="fas fa-history"></i> Request History</h3>
+        <button id="clear-history" class="clear-history-btn">
+            Clear History
+        </button>
+        <div id="history-list"></div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
